@@ -1,0 +1,73 @@
+---
+import { club } from "../config";
+
+const year = 2026; // TODO: keep current, or wire to build date if preferred.
+const socials = Object.entries(club.socials).filter(([, url]) => url);
+---
+
+<footer class="bg-navy-950 text-cream-100">
+  <div class="mx-auto max-w-6xl px-5 py-12">
+    <div class="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="font-display text-2xl text-cream-50">{club.name}</p>
+        <p class="mt-2 max-w-sm text-sm text-cream-200/70">
+          {club.location}
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4 text-sm sm:items-end">
+        <a
+          href={`mailto:${club.email}`}
+          class="text-cream-100 transition-colors hover:text-sage-400"
+        >
+          {club.email}
+        </a>
+        {
+          socials.length > 0 && (
+            <div class="flex items-center gap-3">
+              <span class="text-xs uppercase tracking-wide text-cream-200/60">
+                Join the community
+              </span>
+              {club.socials.instagram && (
+                <a
+                  href={club.socials.instagram}
+                  aria-label="Instagram"
+                  class="text-cream-200 transition-colors hover:text-sage-400"
+                  rel="me noopener"
+                  target="_blank"
+                >
+                  <svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07zm0 5.68a4.16 4.16 0 100 8.32 4.16 4.16 0 000-8.32zm0 6.86a2.7 2.7 0 110-5.4 2.7 2.7 0 010 5.4zm5.3-7.03a.97.97 0 11-1.94 0 .97.97 0 011.94 0z" />
+                  </svg>
+                </a>
+              )}
+              {club.socials.youtube && (
+                <a
+                  href={club.socials.youtube}
+                  aria-label="YouTube"
+                  class="text-cream-200 transition-colors hover:text-sage-400"
+                  rel="me noopener"
+                  target="_blank"
+                >
+                  <svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M23.5 6.2a3.02 3.02 0 00-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.51A3.02 3.02 0 00.5 6.2C0 8.08 0 12 0 12s0 3.92.5 5.8a3.02 3.02 0 002.12 2.14c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51a3.02 3.02 0 002.12-2.14c.5-1.88.5-5.8.5-5.8s0-3.92-.5-5.8zM9.6 15.57V8.43L15.82 12 9.6 15.57z" />
+                  </svg>
+                </a>
+              )}
+            </div>
+          )
+        }
+      </div>
+    </div>
+
+    <div
+      class="court-line mt-10 h-px w-full text-navy-700/60"
+      aria-hidden="true"
+    >
+    </div>
+
+    <p class="mt-6 text-xs text-cream-200/50">
+      © {year} {club.name}. Built with Astro · hosted on GitHub Pages.
+    </p>
+  </div>
+</footer>

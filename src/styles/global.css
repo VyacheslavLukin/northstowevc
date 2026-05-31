@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+/* Self-hosted fonts (no external requests → fast on mobile, GDPR-friendly).
+   The browser only downloads the subset it actually renders (latin), via the
+   unicode-range in each @font-face, so the unused subsets cost nothing at runtime. */
+@import "@fontsource-variable/archivo";
+@import "@fontsource-variable/hanken-grotesk";
+
+/* ───────────────────────────────────────────────────────────────────────────
+   Design tokens — modernised from the club's real brand.
+   Anchor: navy. Energy: sage/mint green (pushed brighter for youth appeal).
+   Surface: warm cream (carried over from the original site).
+   ─────────────────────────────────────────────────────────────────────────── */
+@theme {
+  /* Navy — headings & primary brand (from original "NORTHSTOWE" wordmark) */
+  --color-navy-950: #0d1b2e;
+  --color-navy-900: #122438;
+  --color-navy-800: #173050;
+  --color-navy-700: #1f3a5f; /* primary brand navy */
+  --color-navy-600: #2a4d78;
+  --color-navy-500: #3a6296;
+
+  /* Sage / mint green — the welcoming accent (brightened for energy) */
+  --color-sage-700: #4f9476;
+  --color-sage-600: #62a98a;
+  --color-sage-500: #7cbf9e; /* original site's green */
+  --color-sage-400: #9bd4b6;
+  --color-sage-300: #bce6cf;
+
+  /* Sunshine — a single warm spark for CTAs, used sparingly */
+  --color-spark: #ffc24b;
+  --color-spark-deep: #f0a91f;
+
+  /* Warm neutral surfaces (cream from original site) */
+  --color-cream-50: #f7f4ea;
+  --color-cream-100: #f1ede0;
+  --color-cream-200: #e6e0cc;
+  --color-ink: #122438;
+
+  /* Typography */
+  --font-display: "Archivo Variable", system-ui, sans-serif;
+  --font-body: "Hanken Grotesk Variable", system-ui, sans-serif;
+
+  /* Motion */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Base element styling */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-cream-50);
+  color: var(--color-ink);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+/* Display headings: tight, expanded, athletic */
+.font-display {
+  font-family: var(--font-display);
+  font-variation-settings: "wght" 800, "wdth" 100;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+}
+
+/* Utility: a thin court-line rule */
+.court-line {
+  background-image: repeating-linear-gradient(
+    90deg,
+    currentColor 0,
+    currentColor 14px,
+    transparent 14px,
+    transparent 26px
+  );
+}
+
+/* Entrance animation */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-rise {
+  animation: rise 0.7s var(--ease-out-quart) both;
+}
+
+/* Floating volleyball */
+@keyframes float-ball {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-8deg);
+  }
+  50% {
+    transform: translateY(-18px) rotate(6deg);
+  }
+}
+.animate-float-ball {
+  animation: float-ball 6s ease-in-out infinite;
+}
+
+/* Focus visibility for keyboard users */
+:focus-visible {
+  outline: 3px solid var(--color-spark-deep);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
