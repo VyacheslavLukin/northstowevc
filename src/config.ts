@@ -41,7 +41,7 @@ export const club = {
 // get-involved call to action. Set `organising` to false once sessions start.
 export const status = {
   organising: true,
-  headline: "We're just getting started.",
+  headline: "We're just getting started",
   body: "We'd love for you to be part of the journey. There are no sessions running yet — register your interest and we'll be in touch as soon as we launch.",
 };
 
