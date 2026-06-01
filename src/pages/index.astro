@@ -1,6 +1,15 @@
 ---
 import Base from "../layouts/Base.astro";
-import { club, status, gains, offerings, coach, copy } from "../config";
+import {
+  club,
+  status,
+  playTimes,
+  gallery,
+  gains,
+  offerings,
+  coach,
+  copy,
+} from "../config";
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const formAction = "https://api.web3forms.com/submit";
@@ -227,6 +236,106 @@ const coachInitial = coach.name.charAt(0);
     </div>
   </section>
 
+  {/* ─────────────────────────────  GALLERY  ───────────────────────────── */}
+  <section id="gallery" class="scroll-mt-20 bg-cream-100 py-20 sm:py-28">
+    <div class="mx-auto max-w-6xl px-5">
+      <div class="max-w-2xl">
+        <p class="font-semibold uppercase tracking-[0.2em] text-sage-600">
+          On the court
+        </p>
+        <h2 class="font-display mt-3 text-4xl text-navy-900 sm:text-5xl">
+          Scenes from our first session
+        </h2>
+        <p class="mt-4 text-lg text-navy-800/70">
+          This is what a session looks like — all abilities, all welcome, out in
+          the Cambridgeshire sun. Tap a photo to take a closer look.
+        </p>
+      </div>
+
+      <ul
+        class="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4"
+        role="list"
+      >
+        {
+          gallery.map((photo, i) => (
+            <li>
+              <button
+                type="button"
+                class="group block w-full overflow-hidden rounded-2xl bg-navy-900/5 focus-visible:outline-none"
+                data-lightbox-open={i}
+                aria-label={`Open photo ${i + 1}: ${photo.alt}`}
+              >
+                <img
+                  src={`${base}/sessions/${photo.src}-thumb.jpg`}
+                  alt={photo.alt}
+                  loading="lazy"
+                  decoding="async"
+                  class="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </button>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {/* Lightbox overlay — populated/controlled by the script at end of file */}
+  <div
+    id="lightbox"
+    class="fixed inset-0 z-[200] hidden items-center justify-center bg-navy-950/90 p-4 backdrop-blur-sm"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Photo viewer"
+  >
+    <button
+      type="button"
+      data-lightbox-close
+      class="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-cream-50/10 text-cream-50 transition hover:bg-cream-50/20"
+      aria-label="Close"
+    >
+      <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M6 6l12 12M18 6L6 18" />
+      </svg>
+    </button>
+
+    <button
+      type="button"
+      data-lightbox-prev
+      class="absolute left-2 grid h-12 w-12 place-items-center rounded-full bg-cream-50/10 text-cream-50 transition hover:bg-cream-50/20 sm:left-6"
+      aria-label="Previous photo"
+    >
+      <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 18l-6-6 6-6" />
+      </svg>
+    </button>
+
+    <figure class="max-h-full max-w-5xl">
+      <img
+        id="lightbox-img"
+        src=""
+        alt=""
+        class="max-h-[80vh] w-auto rounded-2xl object-contain"
+      />
+      <figcaption
+        id="lightbox-caption"
+        class="mt-3 text-center text-sm text-cream-200/80"
+      >
+      </figcaption>
+    </figure>
+
+    <button
+      type="button"
+      data-lightbox-next
+      class="absolute right-2 grid h-12 w-12 place-items-center rounded-full bg-cream-50/10 text-cream-50 transition hover:bg-cream-50/20 sm:right-6"
+      aria-label="Next photo"
+    >
+      <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 18l6-6-6-6" />
+      </svg>
+    </button>
+  </div>
+
   {/* ─────────────────────────────  GET INVOLVED  ───────────────────────────── */}
   <section id="join" class="scroll-mt-20 bg-cream-50 py-20 sm:py-28">
     <div class="mx-auto max-w-6xl px-5">
@@ -238,6 +347,16 @@ const coachInitial = coach.name.charAt(0);
             <p class="mx-auto mt-3 max-w-2xl text-lg text-navy-900/85">
               {status.body}
             </p>
+            {playTimes.length > 0 && (
+              <div class="mt-6 flex flex-wrap justify-center gap-3">
+                {playTimes.map((t) => (
+                  <span class="inline-flex items-center gap-2 rounded-full bg-navy-900/10 px-4 py-2 text-sm font-semibold text-navy-900">
+                    <span class="h-2 w-2 rounded-full bg-navy-700" />
+                    {t.day} <span class="font-normal text-navy-900/70">{t.time}</span>
+                  </span>
+                ))}
+              </div>
+            )}
             {club.registerFormUrl && (
               <a
                 href={club.registerFormUrl}
@@ -415,5 +534,91 @@ const coachInitial = coach.name.charAt(0);
         }
       });
     }
+  </script>
+
+  {/* Lightbox gallery — accessible: keyboard arrows/Esc, focus trap, swipe. */}
+  <script
+    is:inline
+    define:vars={{
+      photos: gallery.map((p) => ({
+        full: `${base}/sessions/${p.src}.jpg`,
+        alt: p.alt,
+      })),
+    }}
+  >
+    (function () {
+      const lb = document.getElementById("lightbox");
+      if (!lb) return;
+      const img = document.getElementById("lightbox-img");
+      const caption = document.getElementById("lightbox-caption");
+      const triggers = document.querySelectorAll("[data-lightbox-open]");
+      let index = 0;
+      let lastFocused = null;
+
+      function show(i) {
+        index = (i + photos.length) % photos.length;
+        const p = photos[index];
+        img.src = p.full;
+        img.alt = p.alt;
+        caption.textContent = `${p.alt} (${index + 1} of ${photos.length})`;
+      }
+
+      function open(i) {
+        lastFocused = document.activeElement;
+        show(i);
+        lb.classList.remove("hidden");
+        lb.classList.add("flex");
+        document.body.style.overflow = "hidden";
+        lb.querySelector("[data-lightbox-close]").focus();
+      }
+
+      function close() {
+        lb.classList.add("hidden");
+        lb.classList.remove("flex");
+        document.body.style.overflow = "";
+        img.src = "";
+        if (lastFocused) lastFocused.focus();
+      }
+
+      triggers.forEach((t) => {
+        t.addEventListener("click", () =>
+          open(Number(t.getAttribute("data-lightbox-open"))),
+        );
+      });
+      lb.querySelector("[data-lightbox-close]").addEventListener("click", close);
+      lb.querySelector("[data-lightbox-prev]").addEventListener("click", () =>
+        show(index - 1),
+      );
+      lb.querySelector("[data-lightbox-next]").addEventListener("click", () =>
+        show(index + 1),
+      );
+      // Click the dark backdrop (but not the image/controls) to close.
+      lb.addEventListener("click", (e) => {
+        if (e.target === lb) close();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (lb.classList.contains("hidden")) return;
+        if (e.key === "Escape") close();
+        else if (e.key === "ArrowLeft") show(index - 1);
+        else if (e.key === "ArrowRight") show(index + 1);
+      });
+
+      // Basic swipe support on touch devices.
+      let startX = 0;
+      lb.addEventListener(
+        "touchstart",
+        (e) => (startX = e.changedTouches[0].clientX),
+        { passive: true },
+      );
+      lb.addEventListener(
+        "touchend",
+        (e) => {
+          const dx = e.changedTouches[0].clientX - startX;
+          if (Math.abs(dx) > 50) show(index + (dx < 0 ? 1 : -1));
+        },
+        { passive: true },
+      );
+    })();
   </script>
 </Base>

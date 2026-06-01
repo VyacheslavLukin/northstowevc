@@ -12,22 +12,28 @@ in the site, taken verbatim from your Google Site. Everything editable lives in
 - [x] Real volleyball graphic in the hero — clean volleyball SVG (`public/volleyball.svg`)
 - [x] **Web3Forms** contact form — live key, AJAX submit with inline feedback
 - [x] **Instagram** + **YouTube** links (footer)
-- [x] **"Register your interest"** Google Form button (pre-launch banner)
-- [x] **Custom domain** northstowevc.uk (`public/CNAME`, no base path)
+- [x] **"Register your interest"** Google Form button
+- [x] **Custom domain** northstowevc.uk — live, HTTPS enforced
+- [x] **Live on GitHub Pages** with auto-deploy on every push to `main`
+- [x] **Photo gallery** — first-session photos, grid + lightbox (`public/sessions/`)
+- [x] **Updated status** — "We've started", with Sat (from 4pm) / Sun morning play times
 
 ## Outstanding — needs you
 
-- [ ] **DNS for northstowevc.uk** → point at GitHub Pages (see README → Custom
-      domain), then tick "Enforce HTTPS" in Settings → Pages.
-- [ ] **Push to GitHub** + set Pages source to "GitHub Actions".
-- [ ] **Training day / time / venue + pricing** — none stated on the old site
-      (still organising). When known, tell me and I'll add a Sessions section.
-      Until then the site honestly says you're getting started.
-- [ ] **Action photos** — the design uses graphics + your logo. 3–6 good action
-      shots would be the biggest visual upgrade; I'll wire up a gallery/photo hero.
+- [ ] **Confirm exact play times & venue** — currently shows "Saturdays from 4pm"
+      and "Sundays mornings" (not fixed). Update in `src/config.ts` → `playTimes`
+      and the `status.body` text once locked in. A venue/address would help newcomers.
+- [ ] **Pricing** — not mentioned anywhere yet. Add when decided.
 - [ ] **Events calendar** — the old Events page embedded a Google Calendar that
       showed a "no permission" error. If you make that calendar public, I'll add
       a live events/calendar section.
+
+## Adding more photos later
+
+Drop the next-numbered pair into `public/sessions/` (e.g. `session-9.jpg` +
+`session-9-thumb.jpg`) and add an entry to `gallery` in `src/config.ts` with good
+alt text. Keep files optimised: large ≈1600px long edge, thumb ≈700px.
+(Originals were ~8MB each → optimised to ~430KB large / ~70KB thumb.)
 
 ## Nice to have (later)
 

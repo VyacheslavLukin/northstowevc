@@ -37,13 +37,35 @@ export const club = {
 };
 
 // ─── Status banner ───────────────────────────────────────────────────────────
-// The club is pre-launch ("still organising"). This honest note drives the
-// get-involved call to action. Set `organising` to false once sessions start.
+// The club has run its first session. This honest "early days" note drives the
+// get-involved call to action and folds in the (not-yet-fixed) play times.
 export const status = {
   organising: true,
-  headline: "We're just getting started",
-  body: "We'd love for you to be part of the journey. There are no sessions running yet — register your interest and we'll be in touch as soon as we launch.",
+  headline: "We've started — come and join us!",
+  body: "Our first session is done and we're just getting going. We aim to play on Saturday afternoons (from 4pm) and Sunday mornings. Times aren't set in stone yet, so register your interest or drop us a message and we'll tell you exactly when and where.",
 };
+
+// ─── When we play (folded into the get-involved banner) ──────────────────────
+// TODO: once times are fixed, update these.
+export const playTimes = [
+  { day: "Saturdays", time: "from 4pm" },
+  { day: "Sundays", time: "mornings" },
+];
+
+// ─── Session photo gallery ───────────────────────────────────────────────────
+// Photos live in /public/sessions as session-N.jpg (large) + session-N-thumb.jpg.
+// To add more: drop in the next-numbered pair and add an entry here with good
+// alt text. To remove one, delete its entry (and optionally the files).
+export const gallery = [
+  { src: "session-1", alt: "Two players setting the ball up into a bright sky" },
+  { src: "session-2", alt: "Players warming up around the net on the grass court" },
+  { src: "session-3", alt: "A rally in progress with the ball above the net" },
+  { src: "session-4", alt: "Players ready on both sides of the outdoor net" },
+  { src: "session-5", alt: "A player bumping the ball back over the net" },
+  { src: "session-6", alt: "A player leaping for a spike at the net" },
+  { src: "session-7", alt: "A game underway with Northstowe houses in the background" },
+  { src: "session-8", alt: "A player jumping to serve the ball" },
+];
 
 // ─── Home: "What you will gain" ──────────────────────────────────────────────
 export const gains = [
