@@ -42,14 +42,13 @@ export const club = {
 export const status = {
   organising: true,
   headline: "We've started — come and join us!",
-  body: "Our first session is done and we're just getting going. We aim to play on Saturday afternoons (from 4pm) and Sunday mornings. Times aren't set in stone yet, so register your interest or drop us a message and we'll tell you exactly when and where.",
+  body: "We play Monday, Wednesday and Friday at 6pm, plus a weekend session (Saturday or Sunday) at 6pm. Register your interest or drop us a message and we'll tell you exactly where.",
 };
 
 // ─── When we play (folded into the get-involved banner) ──────────────────────
-// TODO: once times are fixed, update these.
 export const playTimes = [
-  { day: "Saturdays", time: "from 4pm" },
-  { day: "Sundays", time: "mornings" },
+  { day: "Mon, Wed, Fri", time: "6pm" },
+  { day: "Sat or Sun", time: "6pm" },
 ];
 
 // ─── Session photo gallery ───────────────────────────────────────────────────
